@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import plus from "../assets/12/plus.svg";
 import minus from "../assets/12/minus.svg";
+import client from "../lib/client";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -186,7 +186,7 @@ const QuizComponent = ({ memberTargetSeq, inpDate }) => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await axios.get(
+        const response = await client.get(
           `/api/question/someone/${memberTargetSeq}/questionList/${inpDate}`,
           {
             data: {

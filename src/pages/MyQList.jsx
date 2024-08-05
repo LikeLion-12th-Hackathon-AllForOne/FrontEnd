@@ -3,7 +3,9 @@ import styled from "styled-components";
 import backgroundImage from "../assets/2/로그인화면.png";
 import backImage from "../assets/9/뒤로가기_아이콘.svg";
 import infoIcon from "../assets/9/느낌표.svg";
-import Quiz from "../components/Quiz";
+import QuizComponent from "../components/Quiz";
+import { useParams } from "react-router-dom";
+import client from "../lib/client";
 
 const Container = styled.div`
   position: relative;
@@ -43,6 +45,7 @@ const NavContainer = styled.div`
 const BackBtn = styled.img`
   width: 51px;
   height: 44px;
+  cursor: pointer;
 `;
 
 const ServiceName = styled.div`
@@ -110,7 +113,36 @@ const InfoIcon = styled.img`
   margin-right: 10px;
 `;
 
-function MyQList({ name }) {
+const MyQList = () => {
+  const { memberSeq } = useParams();
+  const [quizzes, setQuizzes] = useState([]);
+  const [memberName, setMemberName] = useState("");
+
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      try {
+        const response = await client.get(
+          `/api/question/someone/${memberSeq}/questionList/20240801`,
+          {
+            data: {
+              codeCategorySeq: 22,
+              groupMemberCnt: 4,
+              groupName: "가족",
+            },
+          }
+        );
+        setQuizzes(response.data.data);
+        setMemberName(
+          response.data.data[0]?.answerForm[0]?.memberAnswerName || "멤버"
+        );
+      } catch (error) {
+        console.error("Error fetching quizzes:", error);
+      }
+    };
+
+    fetchQuizzes();
+  }, [memberSeq]);
+
   return (
     <Container>
       <Navigation>
@@ -122,21 +154,23 @@ function MyQList({ name }) {
       <HeaderContainer>
         <Header>
           <TitleContainer>
-            <Title>{name}의 퀴즈 모음</Title>
+            <Title>{memberName}의 퀴즈 모음</Title>
           </TitleContainer>
         </Header>
         <Divider />
       </HeaderContainer>
       <Main>
-        <InfoText>
-          <InfoIcon src={infoIcon} alt="Info Icon" />
-          멤버가 다 들어오면 퀴즈가 시작돼요!
-        </InfoText>
+        {quizzes.length === 0 ? (
+          <InfoText>
+            <InfoIcon src={infoIcon} alt="Info Icon" />
+            멤버가 다 들어오면 퀴즈가 시작돼요!
+          </InfoText>
+        ) : (
+          <QuizComponent quizzes={quizzes} />
+        )}
       </Main>
-
-      <Quiz />
     </Container>
   );
-}
+};
 
 export default MyQList;

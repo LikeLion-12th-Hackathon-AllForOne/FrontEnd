@@ -244,7 +244,7 @@ function SignUp() {
 
   const handleCheckDuplicate = async () => {
     try {
-      const response = await client.get(`/api/user/checkIdDuplicate`, {
+      const response = await client.get("/api/user/checkIdDuplicate", {
         params: { userId: userId.trim() },
       });
       console.log("Response:", response.data);
@@ -259,10 +259,8 @@ function SignUp() {
       console.error("중복 검사 오류", error);
       if (error.response && error.response.status === 400) {
         setMessage("잘못된 요청입니다. 아이디 형식을 확인해주세요.");
-        console.log("실패..");
       } else {
         setMessage("중복 검사 중 오류가 발생했습니다.");
-        console.log("실패......");
       }
       setIsError(true);
     }
@@ -332,8 +330,9 @@ function SignUp() {
         if (response.data.status === "SUCCESS") {
           setMessage("회원가입이 완료되었습니다.");
           setIsError(false);
-          navigate("/group");
+          navigate("/login");
           console.log(response);
+          console.log("회원가입 완");
         } else {
           setMessage(response.data.message);
           setIsError(true);
