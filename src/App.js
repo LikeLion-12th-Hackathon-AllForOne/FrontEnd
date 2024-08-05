@@ -20,7 +20,7 @@ function App() {
         <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/resign" element={<Resign />} />
         <Route path="/group" element={<Gruop />} />
-        <Route path="/qlist" element={<MyQList />} />
+        <Route path="/member/:memberSeq/quizlist" element={<MyQList />} />
       </Routes>
     </BrowserRouter>
   );
