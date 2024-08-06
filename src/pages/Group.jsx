@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { useNavigate } from "react-router-dom";
 import TextBox from "../components/TextBox";
 import backgroundImage from "../assets/2/로그인화면.png";
 import backImage from "../assets/9/뒤로가기_아이콘.svg";
@@ -154,27 +155,20 @@ const fetchGroupDetails = async (groupSeq) => {
 };
 
 function Group({ groupSeq }) {
-  const [members, setMembers] = useState([
-    {
-      memberSeq: 2,
-      userName: "친구3",
-      userBirth: "20000128",
-      userPhone: "01066666666",
-      codeName: "ESTP",
-    },
-  ]);
+  const [members, setMembers] = useState([]);
   const [isQuizPopupVisible, setIsQuizPopupVisible] = useState(false);
   const [isAddQuizPopupVisible, setIsAddQuizPopupVisible] = useState(false);
   const [percentage, setPercentage] = useState(0);
   const [groupName, setGroupName] = useState("");
   const [dayAfterCnt, setDayAfterCnt] = useState(0);
   const [userName, setUserName] = useState("");
-  const [usedQuestionSeq, setUsedQuestionSeq] = useState(null); // Add usedQuestionSeq state
-  const [memberSeq, setMemberSeq] = useState(null); // Add memberSeq state
+  const [usedQuestionSeq, setUsedQuestionSeq] = useState(null);
+  const [memberSeq, setMemberSeq] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserName = () => {
-      const name = localStorage.getItem("userName") || "홍길동"; // Default user name
+      const name = localStorage.getItem("userName") || "홍길동";
       setUserName(name);
     };
 
@@ -202,11 +196,13 @@ function Group({ groupSeq }) {
   }, [groupSeq]);
 
   const handleQuizButtonClick = () => {
-    setUsedQuestionSeq(3); // Set a random usedQuestionSeq, for example 3
-    setMemberSeq(1); // Set the memberSeq you want to use, for example 1
+    setUsedQuestionSeq(3);
+    setMemberSeq(1);
     setIsQuizPopupVisible(true);
   };
-
+  const handleBackClick = () => {
+    navigate(-1);
+  };
   const handleCreateQuizButtonClick = () => {
     setIsAddQuizPopupVisible(true);
   };
@@ -229,7 +225,7 @@ function Group({ groupSeq }) {
         <Container>
           <Navigation>
             <NavContainer>
-              <BackBtn src={backImage} alt="뒤로가기" />
+              <BackBtn src={backImage} alt="뒤로가기" onClick={handleBackClick}/>
               <ServiceName>서비스 이름</ServiceName>
             </NavContainer>
           </Navigation>

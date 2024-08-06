@@ -15,6 +15,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "dev": "watchify ./client/app.jsx -t babelify --outfile ./public/js/app.js -v",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -37,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "watchify": "^4.0.0"
   }
 }

@@ -4,6 +4,7 @@ import left from "../assets/9/왼쪽_화살표.svg";
 import right from "../assets/9/오른쪽_화살표.svg";
 import profileImg from "../assets/9/그룹_기본_이미지.png";
 import Mark from "../assets/9/방장마크.svg";
+import { useNavigate } from "react-router-dom"; // 변경
 
 const Container = styled.div`
   display: flex;
@@ -114,6 +115,7 @@ const Button = styled.div`
   line-height: 20px;
   color: rgba(150, 79, 76, 0.8);
   margin-top: 10px;
+  cursor: pointer;
 `;
 
 const MemberCount = styled.div`
@@ -149,6 +151,7 @@ const ManagerMark = styled.img`
 
 const MemberProfileSlider = ({ members = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
@@ -166,6 +169,10 @@ const MemberProfileSlider = ({ members = [] }) => {
     currentIndex === 0 ? members.length - 1 : currentIndex - 1;
   const getRightIndex = () =>
     currentIndex === members.length - 1 ? 0 : currentIndex + 1;
+
+  const handleQuizNavigation = (memberSeq) => {
+    navigate(`/member/${memberSeq}/quizlist`);
+  };
 
   return (
     <Container>
@@ -205,8 +212,13 @@ const MemberProfileSlider = ({ members = [] }) => {
           <Info isCurrent={true}>
             MBTI: {members[currentIndex]?.codeName || "???"}
           </Info>
-          <Button>편지쓰기</Button>
-          <Button>퀴즈 보러가기</Button>
+          <Button
+            onClick={() =>
+              handleQuizNavigation(members[currentIndex]?.memberSeq)
+            }
+          >
+            퀴즈 보러가기
+          </Button>
         </ProfileCard>
         {members.length > 2 ? (
           <ProfileCard>

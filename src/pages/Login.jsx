@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/2/로그인화면.png";
 import bookImage from "../assets/2/책이미지.svg";
 import backButton from "../assets/2/뒤로가기.svg";
+import FooterComponent from "../components/Footer";
 
 const Container = styled.div`
   position: relative;
@@ -195,15 +196,15 @@ const Login = () => {
     }
 
     try {
-      const response = await client.post("/api/user/login", {
+      const response = await client.post("/api/login/sign", {
         userId,
         userPwd,
       });
-
+      console.log(response.data)
       if (response.data.status === "SUCCESS") {
         setMessage("로그인 되었습니다.");
         setIsError(false);
-        navigate("/group");
+        navigate("/main");
       } else {
         setMessage("아이디 또는 비밀번호가 잘못 입력되었습니다.");
         setIsError(true);
@@ -255,6 +256,7 @@ const Login = () => {
           </LoginForm>
         </LoginContainer>
       </BookContainer>
+      <FooterComponent />
     </Container>
   );
 };

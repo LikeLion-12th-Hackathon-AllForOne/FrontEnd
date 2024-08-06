@@ -6,8 +6,11 @@ import SignUp from "./pages/SignUp";
 import Password from "./pages/Password";
 import UserInfo from "./pages/UserInfo";
 import Resign from "./pages/Resign";
-import Gruop from "./pages/Group";
+import Main from "./pages/Main";
+import Group from "./pages/Group";
 import MyQList from "./pages/MyQList";
+import WriteLetter from "./pages/WriteLetter";
+import MailBox from "./pages/Mailbox";
 
 function App() {
   return (
@@ -19,8 +22,11 @@ function App() {
         <Route path="/password" element={<Password />} />
         <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/resign" element={<Resign />} />
-        <Route path="/group" element={<Gruop />} />
-        <Route path="/qlist" element={<MyQList />} />
+        <Route path="/main" element={<Main />}/>
+        <Route path="/group" element={<Group />} />
+        <Route path="/member/:memberSeq/quizlist" element={<MyQList />} />
+        <Route path="/writeletter" element={<WriteLetter />} />
+        <Route path="/mailbox" element = {<MailBox />}/>
       </Routes>
     </BrowserRouter>
   );
