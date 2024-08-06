@@ -126,7 +126,6 @@ const MyQList = () => {
     navigate("/group");
   };
 
-
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {

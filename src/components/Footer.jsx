@@ -136,5 +136,4 @@ const FooterComponent = () => (
   </PageContainer>
 );
 
-
 export default FooterComponent;

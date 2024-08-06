@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 import SelectLetter from "../components/SelectLetter";
-import Logo from '../assets/logo.svg';
+import Logo from "../assets/logo.svg";
 import backgroundImage from "../assets/2/로그인화면.png";
-import backImage from '../assets/9/뒤로가기_아이콘.svg';
-import Letter1 from "../assets/mail/1번 편지지.svg";
-import Letter2 from "../assets/mail/2번 편지지.svg";
-import Letter3 from "../assets/mail/3번 편지지.svg";
-import ToLine from '../assets/mail/To. 적는칸선.svg';
-import ContentLine from '../assets/mail/내용 적는칸선.svg';
-import FromLine from '../assets/mail/From. 적는칸선.svg';
+import backImage from "../assets/9/뒤로가기_아이콘.svg";
+import Letter3 from "../assets/mail/3번.svg";
+import ContentLine from "../assets/mail/내용 적는칸선.svg";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -102,8 +98,6 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   width: 1200px;
-  /* background: rgba(255, 255, 255, 0.7); */
-  /* border-radius: 0 0 16px 16px; */
   justify-content: center;
   min-height: 60vh;
   padding: 20px;
@@ -113,12 +107,12 @@ const LetterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   border-radius: 16px;
-  background-color: #D8C8BD;
+  background-color: #d8c8bd;
   width: 100%;
-  min-height : 800px;
+  min-height: 700px;
 `;
 
 const LetterPage = styled.div`
@@ -126,25 +120,19 @@ const LetterPage = styled.div`
   width: 400px;
   height: 600px;
   margin: 20px;
-  background-image: url(${(props) => props.bg});
+  background-image: url(${Letter3});
   background-size: cover;
   background-position: center;
 `;
 
-const ToLineImage = styled.img`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 360px;
-`;
-
 const ContentLines = styled.div`
   position: absolute;
-  top: 80px;
+  top: 70px;
   left: 20px;
   width: 360px;
   display: flex;
   flex-direction: column;
+  z-index: 0;
 `;
 
 const ContentLineImage = styled.img`
@@ -154,25 +142,18 @@ const ContentLineImage = styled.img`
 
 const ContentInput = styled.textarea`
   position: absolute;
-  top: 80px;
+  top: 60px;
   left: 20px;
   width: 360px;
-  height: calc(100% - 160px);
+  height: calc(100% - 140px);
   border: none;
   background: transparent;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 24px;
   resize: none;
   outline: none;
   overflow: hidden;
-`;
-
-const FromLineImage = styled.img`
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 360px;
-  text-align: right;
+  z-index: 1;
 `;
 
 const ButtonContainer = styled.div`
@@ -182,60 +163,68 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
-const Button = styled.button`
+const Button = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 160px;
   height: 50px;
   margin: 0 30px;
   border: 1px solid #000;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5); 
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
   background-color: ${(props) => (props.primary ? "#964F4C" : "#F2E8DA")};
   color: ${(props) => (props.primary ? "#F2E8DA" : "#964F4C")};
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
-
-
 `;
 
 function WriteLetter() {
-  const [selectedLetter, setSelectedLetter] = useState("Letter1");
-  const [content, setContent] = useState("");
+  const [contentLeft, setContentLeft] = useState("");
+  const [contentRight, setContentRight] = useState("");
   const navigate = useNavigate();
-
-  const handleSelectLetter = (letterType) => {
-    setSelectedLetter(letterType);
-  };
+  const maxLinesPerPage = 18;
+  const lineHeight = 24;
+  const maxCharsPerLine = 40;
 
   const handleBackClick = () => {
     navigate("/group");
   };
-  
-  const handleContentChange = (e) => {
+
+  const handleContentChangeLeft = (e) => {
+    let text = e.target.value;
+    const lines = text.split("\n");
+    if (lines.length > maxLinesPerPage) {
+      const leftText = lines.slice(0, maxLinesPerPage).join("\n");
+      const rightText = lines
+        .slice(maxLinesPerPage)
+        .join("\n")
+        .slice(0, maxLinesPerPage * maxCharsPerLine);
+      setContentLeft(leftText);
+      setContentRight(rightText);
+    } else {
+      setContentLeft(text);
+    }
+  };
+
+  const handleContentChangeRight = (e) => {
     const text = e.target.value;
-    if (text.length <= 1000) {
-      setContent(text);
+    if (text.split("\n").length <= maxLinesPerPage) {
+      setContentRight(text);
     }
   };
 
-  const getLetterImage = () => {
-    switch (selectedLetter) {
-      case "Letter1":
-        return Letter1;
-      case "Letter2":
-        return Letter2;
-      case "Letter3":
-        return Letter3;
-      default:
-        return Letter1;
-    }
-  };
-
-  const getContentLines = () => {
+  const getContentLines = (content) => {
     const lines = content.split("\n");
     return (
       <ContentLines>
-        {lines.map((line, index) => (
-          <ContentLineImage key={index} src={ContentLine} />
+        {lines.map((_, index) => (
+          <ContentLineImage
+            key={index}
+            src={ContentLine}
+            style={{ top: `${index * lineHeight}px` }}
+          />
         ))}
       </ContentLines>
     );
@@ -256,18 +245,30 @@ function WriteLetter() {
           </TitleContainer>
         </Header>
         <Divider />
-        <SelectLetter header="편지지 선택하기" onSelect={handleSelectLetter} />
+        <SelectLetter header="편지지 선택하기" />
       </HeaderContainer>
       <Main>
         <LetterContainer>
-          {/* 편지 작성 부분 */}
+          <LetterPage>
+            {getContentLines(contentLeft)}
+            <ContentInput
+              value={contentLeft}
+              onChange={handleContentChangeLeft}
+            />
+          </LetterPage>
+          <LetterPage>
+            {getContentLines(contentRight)}
+            <ContentInput
+              value={contentRight}
+              onChange={handleContentChangeRight}
+            />
+          </LetterPage>
         </LetterContainer>
-        
       </Main>
       <ButtonContainer>
-          <Button primary>전송하기</Button>
-          <Button>취소하기</Button>
-        </ButtonContainer>
+        <Button primary>전송하기</Button>
+        <Button>취소하기</Button>
+      </ButtonContainer>
       <Footer />
     </Container>
   );
