@@ -172,6 +172,8 @@ function Group({ groupSeq }) {
       setUserName(name);
     };
 
+
+    
     fetchUserName();
 
     const getGroupDetails = async () => {
