@@ -115,7 +115,7 @@ const InfoIcon = styled.img`
 function Mailbox() {
   return (
     <Container>
-      <Navigation>
+      {/* <Navigation>
         <NavContainer>
           <BackBtn src={backImage} alt="뒤로가기" />
           <LogoImg src={Logo} alt="Logo" />
@@ -127,9 +127,9 @@ function Mailbox() {
             <Title>00님께 편지 쓰기</Title>
             <ReceiveMailbox
               header="편지 보따리"
-              icon={getIconByPercentage(percentage)}
+              // icon={getIconByPercentage(percentage)}
               text=""
-              percentage={percentage}
+              // percentage={percentage}
               info={true}
             />
           </TitleContainer>
@@ -144,7 +144,7 @@ function Mailbox() {
       </Main>
         
       {/* <Quiz /> */}
-      <Footer />
+      <Footer /> */}
     </Container>
   );
 }

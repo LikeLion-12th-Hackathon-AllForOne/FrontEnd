@@ -334,7 +334,8 @@ function Main() {
         groups.forEach((group) => {
             console.log(group.categoryName)
             const image = group.ownerYn ? categoryImages[group.categoryName].leader : categoryImages[group.categoryName].member;
-            boxes.push(<GroupBox text={group.groupName} key={group.groupSeq} image={image} onClick={handleToJoinGroupRoomClick}></GroupBox>);
+            boxes.push(<GroupBox  key={group.groupSeq} image={image} onClick={handleToJoinGroupRoomClick}></GroupBox>);
+
         });
 
         if (boxes.length > 5) {
