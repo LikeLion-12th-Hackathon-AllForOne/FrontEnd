@@ -173,6 +173,10 @@ const MemberProfileSlider = ({ members = [] }) => {
   const handleQuizNavigation = (memberSeq) => {
     navigate(`/member/${memberSeq}/quizlist`);
   };
+  const handleLetterNavigation = (memberSeq) => {
+    navigate(`/member/${memberSeq}/writeletter`);
+  };
+ 
 
   return (
     <Container>
@@ -218,6 +222,13 @@ const MemberProfileSlider = ({ members = [] }) => {
             }
           >
             퀴즈 보러가기
+          </Button>
+          <Button
+            onClick={() =>
+              handleLetterNavigation(members[currentIndex]?.memberSeq)
+            }
+          >
+            편지 쓰기
           </Button>
         </ProfileCard>
         {members.length > 2 ? (
