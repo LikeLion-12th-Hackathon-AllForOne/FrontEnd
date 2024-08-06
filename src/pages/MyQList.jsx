@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/2/로그인화면.png";
 import backImage from "../assets/9/뒤로가기_아이콘.svg";
 import infoIcon from "../assets/9/느낌표.svg";
@@ -114,9 +115,15 @@ const InfoIcon = styled.img`
 `;
 
 const MyQList = () => {
+  const navigate = useNavigate();
+
   const { memberSeq } = useParams();
   const [quizzes, setQuizzes] = useState([]);
   const [memberName, setMemberName] = useState("");
+
+  const handleBackClick = () => {
+    navigate("/group");
+  };
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -147,7 +154,7 @@ const MyQList = () => {
     <Container>
       <Navigation>
         <NavContainer>
-          <BackBtn src={backImage} alt="뒤로가기" />
+          <BackBtn src={backImage} alt="뒤로가기" onClick={handleBackClick}/>
           <ServiceName>스토리마인드</ServiceName>
         </NavContainer>
       </Navigation>
