@@ -24,16 +24,11 @@ function App() {
         <Route path="/password" element={<Password />} />
         <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/resign" element={<Resign />} />
-<<<<<<< HEAD
         <Route path="/main" element={<Main />}/>
-        <Route path="/group" element={<Group />} />
-        <Route path="/member/:memberSeq/quizlist" element={<MyQList />} />
         <Route path="/writeletter" element={<WriteLetter />} />
         <Route path="/mailbox" element = {<MailBox />}/>
-=======
         <Route path="/group" element={<Gruop />} />
         <Route path="/member/:memberSeq/quizlist" element={<MyQList />} />
->>>>>>> 8eeadc7dd3a9fdaa121a3785907a1cd6cfeff2a2
       </Routes>
     </BrowserRouter>
   );
