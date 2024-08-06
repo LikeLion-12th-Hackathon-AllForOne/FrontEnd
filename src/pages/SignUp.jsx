@@ -244,9 +244,10 @@ function SignUp() {
 
   const handleCheckDuplicate = async () => {
     try {
-      const response = await client.get("/api/user/checkIdDuplicate", {
-        params: { userId: userId.trim() },
+      const response = await client.post("/api/user/checkIdDuplicate", {
+         userId: userId.trim(),
       });
+      console.log(userId.trim());
       console.log("Response:", response.data);
       if (response.data.status === "ERROR") {
         setMessage("해당 아이디는 이미 사용 중입니다.");
@@ -302,6 +303,25 @@ function SignUp() {
     }
   };
 
+  const mbtiTocodeSeq = {
+    "ESTJ": 6,
+    "ESTP": 7,
+    "ESFJ": 8,
+    "ESFP": 9,
+    "ENTJ": 10,
+    "ENTP": 11,
+    "ENFJ": 12,
+    "ENFP": 13,
+    "ISTJ": 14,
+    "ISTP": 15,
+    "ISFJ": 16,
+    "ISFP": 17,
+    "INTJ": 18,
+    "INTP": 19,
+    "INFJ": 20,
+    "INFP": 21
+  };
+
   const handleRegister = async () => {
     const errors = {};
     if (!userId) errors.userId = "아이디를 입력해주세요.";
@@ -317,6 +337,18 @@ function SignUp() {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
+      let codeMbtiSeq = 6; // 기본값 설정
+
+      if (mbti) {
+        const normalizedMbti = mbti.toUpperCase();
+        codeMbtiSeq = mbtiTocodeSeq[normalizedMbti];
+        if (!codeMbtiSeq) {
+          setMessage("유효하지 않은 MBTI입니다.");
+          setIsError(true);
+          return;
+        }
+      }
+
       try {
         const response = await client.post("/api/user/join", {
           userId: userId,
@@ -325,8 +357,9 @@ function SignUp() {
           userBirth: birthday,
           userPhone: phone,
           userImg: "",
-          codeMbti: mbti || "6",
+          codeMbti: codeMbtiSeq,
         });
+        
         if (response.data.status === "SUCCESS") {
           setMessage("회원가입이 완료되었습니다.");
           setIsError(false);
@@ -344,7 +377,7 @@ function SignUp() {
       }
     }
   };
-
+  
   return (
     <Container>
       <BookContainer>
@@ -361,9 +394,10 @@ function SignUp() {
                 <InputCheckGroup>
                   <Input
                     placeholder="아이디를 입력하세요."
-                    value={userId}
+                    value={userId.trim()}
                     onChange={(e) => setUserId(e.target.value)}
                   />
+                  
                   <Button2 onClick={handleCheckDuplicate}>중복검사</Button2>
                 </InputCheckGroup>
                 {formErrors.userId && (
