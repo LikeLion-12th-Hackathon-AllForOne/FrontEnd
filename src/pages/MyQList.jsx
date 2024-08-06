@@ -115,16 +115,22 @@ const InfoIcon = styled.img`
 `;
 
 const MyQList = () => {
+<<<<<<< HEAD
   const navigate = useNavigate();
 
+=======
+>>>>>>> 8eeadc7dd3a9fdaa121a3785907a1cd6cfeff2a2
   const { memberSeq } = useParams();
   const [quizzes, setQuizzes] = useState([]);
   const [memberName, setMemberName] = useState("");
 
+<<<<<<< HEAD
   const handleBackClick = () => {
     navigate("/group");
   };
 
+=======
+>>>>>>> 8eeadc7dd3a9fdaa121a3785907a1cd6cfeff2a2
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {

@@ -164,7 +164,10 @@ function Group({ groupSeq }) {
   const [userName, setUserName] = useState("");
   const [usedQuestionSeq, setUsedQuestionSeq] = useState(null);
   const [memberSeq, setMemberSeq] = useState(null);
+<<<<<<< HEAD
   const navigate = useNavigate();
+=======
+>>>>>>> 8eeadc7dd3a9fdaa121a3785907a1cd6cfeff2a2
 
   useEffect(() => {
     const fetchUserName = () => {
