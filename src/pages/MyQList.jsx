@@ -116,12 +116,16 @@ const InfoIcon = styled.img`
 
 const MyQList = () => {
   const navigate = useNavigate();
+
+
   const { memberSeq } = useParams();
   const [quizzes, setQuizzes] = useState([]);
   const [memberName, setMemberName] = useState("");
+
   const handleBackClick = () => {
     navigate("/group");
   };
+
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {

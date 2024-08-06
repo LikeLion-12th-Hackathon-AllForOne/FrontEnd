@@ -244,8 +244,12 @@ function SignUp() {
 
   const handleCheckDuplicate = async () => {
     try {
+
+
       const response = await client.post("/api/user/checkIdDuplicate", {
          userId: userId.trim(),
+
+      
       });
       console.log(userId.trim());
       console.log("Response:", response.data);
@@ -364,8 +368,7 @@ function SignUp() {
           setMessage("회원가입이 완료되었습니다.");
           setIsError(false);
           navigate("/login");
-          console.log(response);
-          console.log("회원가입 완");
+
         } else {
           setMessage(response.data.message);
           setIsError(true);

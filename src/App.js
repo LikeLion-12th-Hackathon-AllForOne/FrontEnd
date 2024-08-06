@@ -27,7 +27,7 @@ function App() {
         <Route path="/main" element={<Main />}/>
         <Route path="/writeletter" element={<WriteLetter />} />
         <Route path="/mailbox" element = {<MailBox />}/>
-        <Route path="/group" element={<Gruop />} />
+        <Route path="/group" element={<Group />} />
         <Route path="/member/:memberSeq/quizlist" element={<MyQList />} />
       </Routes>
     </BrowserRouter>
