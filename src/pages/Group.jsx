@@ -11,6 +11,7 @@ import MemberProfile from "../components/MemberProfile";
 import TextBox2 from "../components/TextBox2";
 import QuizPopup from "../components/QuizPopup";
 import AddQuiz from "../components/AddQuiz";
+import Logo from "../assets/logo.svg";
 
 const GlobalStyle = createGlobalStyle`
   #group-page {
@@ -143,6 +144,10 @@ const TextBoxContainer = styled.div`
   margin-top: 24px;
 `;
 
+const LogoImg = styled.img`
+  width: 250px;
+  height: 70px;
+`;
 const fetchGroupDetails = async (groupSeq) => {
   try {
     const response = await fetch(`/api/group/${groupSeq}/findDetails`);
@@ -203,7 +208,7 @@ function Group({ groupSeq }) {
     setIsQuizPopupVisible(true);
   };
   const handleBackClick = () => {
-    navigate(-1);
+    navigate("/main");
   };
   const handleCreateQuizButtonClick = () => {
     setIsAddQuizPopupVisible(true);
@@ -228,8 +233,8 @@ function Group({ groupSeq }) {
           <Navigation>
             <NavContainer>
               <BackBtn src={backImage} alt="뒤로가기" onClick={handleBackClick}/>
-              <ServiceName>서비스 이름</ServiceName>
-            </NavContainer>
+              <LogoImg src={Logo} alt="Logo" />
+              </NavContainer>
           </Navigation>
           <HeaderContainer>
             <Header>

@@ -25,7 +25,7 @@ function App() {
         <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/resign" element={<Resign />} />
         <Route path="/main" element={<Main />}/>
-        <Route path="/writeletter" element={<WriteLetter />} />
+        <Route path="/member/:memberSeq/writeletter" element={<WriteLetter />} />
         <Route path="/mailbox" element = {<MailBox />}/>
         <Route path="/group" element={<Group />} />
         <Route path="/member/:memberSeq/quizlist" element={<MyQList />} />

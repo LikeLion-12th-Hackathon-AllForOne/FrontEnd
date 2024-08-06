@@ -71,9 +71,7 @@ const ProgressBar = ({ percentage }) => {
       </BarContainer>
       <LabelContainer>
         <Label>0%</Label>
-        <Label>25%</Label>
         <Label>50%</Label>
-        <Label>75%</Label>
         <Label>100%</Label>
       </LabelContainer>
     </ProgressBarContainer>
