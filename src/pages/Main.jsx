@@ -17,6 +17,12 @@ import friend from '../assets/4/room_friend.png';
 import Lfamily from '../assets/4/Lroom_family.png';
 import Lcouple from '../assets/4/Lroom_couple.png';
 import Lfriend from '../assets/4/Lroom_friend.png';
+import BlueBird from '../assets/profile/BlueBird.png';
+import GrayBird from '../assets/profile/GrayBird.png';
+import GreenBird from '../assets/profile/GreenBird.png';
+import PinkBird from '../assets/profile/PinkBird.png';
+import RedBird from '../assets/profile/RedBird.png';
+import YellowBird from '../assets/profile/YellowBird.png';
 
 const GlobalStyle = createGlobalStyle`
     #main-page {
@@ -215,6 +221,16 @@ const categoryImages = { // categoryImages 정의 추가
     }
 };
 
+
+const profiles = {
+    'blue':BlueBird,
+    'gray':GrayBird,
+    'green':GreenBird,
+    'pink':PinkBird,
+    'red':RedBird,
+    'yellow':YellowBird
+};
+
 function Main() {
     const [userInfo, setUserInfo] = useState({
         userId: "",
@@ -233,12 +249,12 @@ function Main() {
 
     const fetchUserInfo = async () => {
         try {
-            const response = await client.get("/api/user/searchUserInfo");
-
+            const response = await client.post("/api/user/searchUserInfo");
             if (response.data.status === "SUCCESS") {
-                setUserInfo(response.data.list); // 사용자 정보 상태 업데이트
-                console.log(userInfo.userName);
-                setProfileImage(response.data.data.userImg || BlueBirdProfile); // 프로필 이미지 상태 업데이트
+                setUserInfo(response.data.data); // 사용자 정보 상태 업데이트
+                setProfileImage(profiles[response.data.data.userImg] || BlueBirdProfile); // 프로필 이미지 상태 업데이트
+                console.log(response.data.data.userImg);
+
             } else {
                 setMessage("사용자 정보를 불러오는 데 실패했습니다.");
                 setIsError(true);
@@ -279,17 +295,22 @@ function Main() {
         fetchGroups();
     }, [fetchGroups]);
 
-    const handleProfileSelect = async (selectedImage) => {
-        setProfileImage(selectedImage);
+    const handleProfileSelect = async (selectedImage, Imgsrc) => {
+        console.log("selectedImage ::",Imgsrc);
+
+        setProfileImage(Imgsrc);
         setIsProfilePopupOpen(false);
         
         try {
-            const response = await client.post("/api/user/updateProfileImage", {
-                profileImage: selectedImage
+            const response = await client.post("/api/user/updateUserImage", {
+                userImg: selectedImage
             });
 
+
             if (response.data.status === "SUCCESS") {
-                alert('프로필 이미지가 업데이트되었습니다.');
+                setMessage('사용자 프로필이 변경되었습니다.');
+                setIsError(true);
+
             } else {
                 console.error("서버 응답 오류", response.data.message);
             }
@@ -305,12 +326,15 @@ function Main() {
     const handleUserInfoButtonClick = () => {
         navigate("/userinfo");
     };
-
+    const handleToJoinGroupRoomClick =() => {
+        navigate("/group");
+    }
     const renderBoxes = () => {
         let boxes = [];
         groups.forEach((group) => {
+            console.log(group.categoryName)
             const image = group.ownerYn ? categoryImages[group.categoryName].leader : categoryImages[group.categoryName].member;
-            boxes.push(<GroupBox key={group.id} image={image}></GroupBox>);
+            boxes.push(<GroupBox text={group.groupName} key={group.groupSeq} image={image} onClick={handleToJoinGroupRoomClick}></GroupBox>);
         });
 
         if (boxes.length > 5) {
@@ -340,7 +364,7 @@ function Main() {
                                 <img src={profileImage} alt="profile" />
                             </ProfileImage>
                             <UserInfo>
-                                <UserName>{userInfo.userName}이름?</UserName>
+                                <UserName>{userInfo.userName}</UserName>
                                 
                                 <UserInfoBlock>
                                     <LogoutButton onClick={handleLogoutButtonClick}>로그아웃</LogoutButton>

@@ -79,19 +79,22 @@ const SelectProfilePopup = ({ onClose, onProfileSelect }) => {
         { id: 'red', src: RedBird },
         { id: 'yellow', src: YellowBird }
     ];
-
     return (
         <PopupOverlay>
             <PopupContent>
 
                 <ProfileSelectionGrid>
                     {profiles.map(profile => (
+                            
+
                         <ProfileImage
                             key={profile.id}
                             src={profile.src}
                             alt={profile.id}
-                            onClick={() => onProfileSelect(profile.src)}
+                            onClick={() => {onProfileSelect(profile.id, profile.src)}
+                            }
                         />
+                        
                     ))}
                 </ProfileSelectionGrid>
             </PopupContent>

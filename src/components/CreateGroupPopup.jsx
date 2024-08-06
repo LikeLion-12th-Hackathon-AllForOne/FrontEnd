@@ -270,9 +270,9 @@ const CreateGroup = ({ onClose }) => {
     };
 
     const categoryToCodeSeq = {
-        '가족': 22,
-        '친구': 23,
-        '연인': 24
+        '가족': 23,
+        '친구': 24,
+        '연인': 25
     };
     
     const handleCreateClick = async () => {
